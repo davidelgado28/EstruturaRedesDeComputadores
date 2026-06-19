@@ -1,0 +1,690 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Redes de Computadores: Referência</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css" />
+    <style>
+      ::-webkit-scrollbar { width: 8px; }
+      ::-webkit-scrollbar-track { background: #f1f1f1; }
+      ::-webkit-scrollbar-thumb { background: #888; border-radius: 4px; }
+      ::-webkit-scrollbar-thumb:hover { background: #555; }
+      .transition-all { transition: all 0.3s ease; }
+      .code-block {
+        font-family: "Courier New", monospace;
+        background-color: #2d2d2d;
+        color: #f8f8f2;
+        border-radius: 6px;
+        padding: 1rem;
+        overflow-x: auto;
+      }
+      .keyword  { color: #569cd6; }
+      .type     { color: #4ec9b0; }
+      .string   { color: #ce9178; }
+      .comment  { color: #6a9955; font-style: italic; }
+      .function { color: #dcdcaa; }
+      .builtin  { color: #c586c0; }
+      .pp       { color: #c586c0; } 
+      .number   { color: #b5cea8; }
+      .dropdown-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease-out; }
+      .dropdown-content.open { max-height: 500px; }
+      .content-section { display: none; }
+      .content-section.active { display: block; }
+      .nav-active { background-color: #dcfce7; font-weight: 700; color: #166534; }
+    </style>
+  </head>
+  <body class="bg-gray-100 font-sans">
+
+    <header class="bg-green-800 text-white shadow-lg">
+      <div class="container mx-auto px-4 py-4 flex flex-col md:flex-row justify-between items-center">
+        <div class="flex items-center justify-between w-full md:w-auto mb-4 md:mb-0">
+          <div class="flex items-center">
+            <i class="fas fa-network-wired text-3xl mr-3"></i>
+            <h1 class="text-2xl font-bold">Redes de Computadores: Referência</h1>
+          </div>
+          <button id="mobile-menu-btn" class="md:hidden text-white text-2xl focus:outline-none" title="Abrir sumário">
+            <i class="fas fa-bars"></i>
+          </button>
+        </div>
+        
+        <div class="flex flex-col sm:flex-row items-center space-y-4 sm:space-y-0 sm:space-x-4 w-full md:w-auto">
+          <div class="relative w-full sm:w-64">
+            <input type="text" placeholder="Pesquisar"
+              class="px-4 py-2 rounded-full bg-green-700 text-white placeholder-green-300 focus:outline-none focus:ring-2 focus:ring-green-400 w-full" />
+            <button class="absolute right-3 top-2 text-green-300 hover:text-white">
+              <i class="fas fa-search"></i>
+            </button>
+            <div id="search-results"
+              class="absolute left-0 mt-2 w-full bg-white border border-gray-300 rounded shadow-lg z-50 hidden text-gray-800"></div>
+          </div>
+          <a href="#" onclick="window.location.reload()" class="inline-flex items-center px-3 py-2 bg-white text-green-800 rounded-full shadow-sm hover:bg-green-100 transition-all shrink-0" title="Recarregar página">
+            <i class="fas fa-home mr-2"></i>
+            Início
+          </a>
+        </div>
+      </div>
+    </header>
+
+    <main class="flex-1">
+      <div class="flex flex-1 container mx-auto px-4 py-8">
+
+        <div id="sidebar-overlay" class="fixed inset-0 bg-black/50 z-40 hidden md:hidden transition-opacity"></div>
+
+        <div id="sidebar" class="w-72 shrink-0 bg-white rounded-r-lg md:rounded-lg shadow-md p-4 mr-0 md:mr-8 fixed md:sticky top-0 md:top-8 left-0 h-screen md:h-fit z-50 md:z-0 transform -translate-x-full md:translate-x-0 transition-transform duration-300 overflow-y-auto md:overflow-visible">
+          <div class="p-4 border-b border-gray-200 flex justify-between items-center md:block md:p-0 md:border-none">
+            <h1 class="text-2xl font-bold md:mb-4 text-green-800">Sumário</h1>
+            <button id="close-sidebar-btn" class="md:hidden text-gray-500 hover:text-green-700 text-2xl focus:outline-none">
+              <i class="fas fa-times"></i>
+            </button>
+          </div>
+          <nav>
+
+            <div class="mb-4 mt-4">
+              <a href="#definicao" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all"
+                data-section="definicao" data-explanation="O que é uma rede de computadores, componentes e benefícios.">
+                <i class="fas fa-globe mr-2 ml-2"></i>
+                <span class="flex items-center mr-12">Definição de Rede</span>
+              </a>
+            </div>
+
+            <div class="mb-4 relative">
+              <a href="#conceitos" class="dropdown-btn flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all"
+                data-section="conceitos" data-explanation="Tipos, topologias e transmissão de dados em redes.">
+                <i class="fas fa-project-diagram mr-2"></i>
+                <span class="flex items-center">Conceitos Fundamentais</span>
+                <i class="fas fa-chevron-right absolute end-4 transition-all transform"></i>
+              </a>
+              <div id="dd-conceitos" class="dropdown-content pl-6 mt-1">
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="tipos-redes" data-explanation="Classificação de redes por transmissão e arquitetura.">Tipos de Redes</a>
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="topologia" data-explanation="Topologias físicas e lógicas: estrela, barramento, anel, mesh.">Topologia de Redes</a>
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="transmissao" data-explanation="Meios de transmissão, sinais, latência e throughput.">Transmissão de Dados</a>
+              </div>
+            </div>
+
+            <div class="mb-4 relative">
+              <a href="#escala" class="dropdown-btn flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all"
+                data-section="escala" data-explanation="Redes PAN, LAN, MAN e WAN por área de cobertura.">
+                <i class="fas fa-wifi mr-2"></i>
+                <span class="flex items-center">Redes por Abrangência</span>
+                <i class="fas fa-chevron-right absolute end-4 transition-all transform"></i>
+              </a>
+              <div id="dd-escala" class="dropdown-content pl-6 mt-1">
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="lan-pan-man-wan" data-explanation="Comparação entre LAN, PAN, MAN e WAN com exemplos práticos.">LAN, PAN, MAN e WAN</a>
+              </div>
+            </div>
+
+            <div class="mb-4 relative">
+              <a href="#modelos" class="dropdown-btn flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all"
+                data-section="modelos" data-explanation="Modelos OSI e TCP/IP e suas camadas principais.">
+                <i class="fas fa-layer-group mr-2"></i>
+                <span class="flex items-center">Modelos e Camadas</span>
+                <i class="fas fa-chevron-right absolute end-4 transition-all transform"></i>
+              </a>
+              <div id="dd-modelos" class="dropdown-content pl-6 mt-1">
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="camada-aplicacao" data-explanation="Camada de Aplicação nos modelos OSI e TCP/IP (HTTP, DNS, FTP, etc).">Camada de Aplicação</a>
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="camada-transporte" data-explanation="Camada de Transporte: TCP (confiável) vs UDP (rápido).">Camada de Transporte</a>
+                <a href="#" class="nav-link flex items-center block px-3 py-2 rounded hover:bg-green-100 text-green-700 font-medium transition-all" data-section="camada-rede" data-explanation="Camada de Rede: IP, roteamento, endereçamento IPv4/IPv6.">Camada de Rede</a>
+              </div>
+            </div>
+
+            <div class="mt-8 border-t pt-4">
+              <h3 class="font-bold mb-2 text-green-800">Recursos Úteis</h3>
+              <ul class="space-y-2">
+                <li>
+                  <a href="#" class="nav-link text-sm text-green-700 hover:underline flex items-center"
+                    data-section="recursos" data-explanation="Links para documentação oficial e ferramentas de estudo.">
+                    <i class="fas fa-external-link-alt mr-2 text-xs"></i>Documentação e Ferramentas
+                  </a>
+                </li>
+                <li>
+                  <a href="#" class="nav-link text-sm text-green-700 hover:underline flex items-center"
+                    data-section="pratica" data-explanation="Comandos práticos para diagnóstico de redes.">
+                    <i class="fas fa-terminal mr-2 text-xs"></i>Prática: Comandos de Rede
+                  </a>
+                </li>
+              </ul>
+            </div>
+          </nav>
+        </div>
+
+        <div id="content" class="flex flex-col flex-1 min-w-0">
+          <div id="explanation"></div>
+
+          <footer class="mt-12 border-t pt-8 text-center text-gray-600 text-sm">
+            <p>© 2026 Referência de Redes de Computadores. Todos os direitos reservados.</p>
+            <p class="mt-2">Este site é apenas para fins educacionais.</p>
+            <p class="mt-2 font-semibold text-green-700">David Delgado</p>
+            <div class="flex justify-center mt-4">
+              <a href="https://github.com/" target="_blank" class="text-green-700 hover:text-green-900 inline-flex items-center">
+                <i class="fab fa-github mr-2"></i> GitHub
+              </a>
+            </div>
+          </footer>
+        </div>
+      </div>
+    </main>
+
+    <template id="tpl-definicao">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-globe text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Definição de Rede de Computadores</h2>
+        </div>
+        <p class="text-gray-700 mb-4">
+          Uma <strong>rede de computadores</strong> é um sistema que conecta dois ou mais dispositivos computacionais para que possam compartilhar recursos (arquivos, impressoras, conexões à internet) e trocar dados de forma eficiente e segura.
+        </p>
+        <p class="text-gray-700 mb-4">
+          O conceito surgiu na década de 1960 com a ARPANET (precursora da internet). Hoje, redes estão presentes em todos os lugares: casas, empresas, data centers, cidades inteligentes e até em satélites.
+        </p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-6">
+          <div class="bg-green-50 border-l-4 border-green-600 p-4">
+            <h4 class="font-semibold text-green-800 mb-2"><i class="fas fa-check-circle mr-2"></i>Componentes Principais</h4>
+            <ul class="text-sm text-green-700 space-y-1 list-disc list-inside">
+              <li><strong>Hosts/Nós</strong>: Computadores, servidores, smartphones, IoT</li>
+              <li><strong>Links</strong>: Cabos (par trançado, fibra) ou wireless (Wi-Fi, 5G)</li>
+              <li><strong>Dispositivos de rede</strong>: Switches, roteadores, access points, firewalls</li>
+              <li><strong>Protocolos</strong>: Conjunto de regras (TCP/IP, HTTP, Ethernet)</li>
+            </ul>
+          </div>
+          <div class="bg-green-50 border-l-4 border-green-600 p-4">
+            <h4 class="font-semibold text-green-800 mb-2"><i class="fas fa-lightbulb mr-2"></i>Benefícios</h4>
+            <ul class="text-sm text-green-700 space-y-1 list-disc list-inside">
+              <li>Compartilhamento de recursos e periféricos</li>
+              <li>Comunicação em tempo real (chat, vídeo, e-mail)</li>
+              <li>Acesso centralizado a dados e backup</li>
+              <li>Redução de custos e aumento de produtividade</li>
+              <li>Possibilidade de trabalho remoto e colaboração</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-block mt-6">
+          <pre><span class="comment"># Exemplo prático de verificação de conectividade</span>
+<span class="function">ping</span> 8.8.8.8
+<span class="comment"># Resposta típica:</span>
+PING 8.8.8.8 (8.8.8.8) 56(84) bytes of data.
+64 bytes from 8.8.8.8: icmp_seq=1 ttl=117 time=12.3 ms
+
+<span class="comment"># Verificar configuração de rede (Linux/macOS)</span>
+ip addr show
+<span class="comment"># ou no Windows:</span>
+ipconfig /all</pre>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-tipos-redes">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-project-diagram text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Tipos de Redes</h2>
+        </div>
+        <p class="text-gray-700 mb-4">As redes podem ser classificadas de várias formas. As principais categorias são por <strong>meio de transmissão</strong>, por <strong>arquitetura</strong> e por <strong>escala de cobertura</strong> (esta última detalhada em seção específica).</p>
+
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-4">
+          <div class="border rounded-lg p-4 hover:shadow transition-all">
+            <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-plug mr-2"></i>Com Fio (Wired)</h3>
+            <p class="text-sm text-gray-600">Maior estabilidade, velocidade e segurança. Exemplos: Ethernet (par trançado Cat6/Cat7), fibra óptica.</p>
+            <ul class="text-xs mt-2 text-gray-500 list-disc list-inside">
+              <li>Baixa latência e alta taxa de transferência</li>
+              <li>Menos suscetível a interferências</li>
+              <li>Ideal para data centers e backbones</li>
+            </ul>
+          </div>
+          <div class="border rounded-lg p-4 hover:shadow transition-all">
+            <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-wifi mr-2"></i>Sem Fio (Wireless)</h3>
+            <p class="text-sm text-gray-600">Mobilidade e flexibilidade. Exemplos: Wi-Fi 6/7, Bluetooth, 5G, LoRa, Zigbee.</p>
+            <ul class="text-xs mt-2 text-gray-500 list-disc list-inside">
+              <li>Fácil instalação e mobilidade</li>
+              <li>Suscetível a interferências e obstáculos</li>
+              <li>Segurança depende de criptografia (WPA3)</li>
+            </ul>
+          </div>
+          <div class="border rounded-lg p-4 hover:shadow transition-all">
+            <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-server mr-2"></i>Cliente-Servidor</h3>
+            <p class="text-sm text-gray-600">Dispositivos clientes solicitam serviços a servidores centrais (ex: web, e-mail, arquivos).</p>
+          </div>
+          <div class="border rounded-lg p-4 hover:shadow transition-all">
+            <h3 class="font-bold text-green-700 mb-2"><i class="fas fa-exchange-alt mr-2"></i>Peer-to-Peer (P2P)</h3>
+            <p class="text-sm text-gray-600">Todos os nós atuam como cliente e servidor simultaneamente. Ex: BitTorrent, blockchain.</p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-topologia">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-sitemap text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Topologia de Redes</h2>
+        </div>
+        <p class="text-gray-700 mb-4">Topologia define como os dispositivos estão fisicamente ou logicamente conectados. A escolha impacta custo, desempenho, escalabilidade e tolerância a falhas.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4 mt-4">
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-star text-yellow-500 mr-2"></i><strong class="text-green-700">Estrela (Star)</strong></div>
+            <p class="text-sm">Todos os nós conectados a um switch/roteador central. Mais comum hoje.</p>
+          </div>
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-road text-yellow-500 mr-2"></i><strong class="text-green-700">Barramento (Bus)</strong></div>
+            <p class="text-sm">Todos os dispositivos compartilham um único cabo coaxial. Raro atualmente.</p>
+          </div>
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-sync text-yellow-500 mr-2"></i><strong class="text-green-700">Anel (Ring)</strong></div>
+            <p class="text-sm">Dispositivos conectados em círculo. Token Ring (antigo) ou SONET.</p>
+          </div>
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-project-diagram text-yellow-500 mr-2"></i><strong class="text-green-700">Malha (Mesh)</strong></div>
+            <p class="text-sm">Muitos caminhos redundantes entre nós. Usado em WANs e data centers.</p>
+          </div>
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-tree text-yellow-500 mr-2"></i><strong class="text-green-700">Árvore (Tree)</strong></div>
+            <p class="text-sm">Combinação hierárquica de estrelas. Usada em redes corporativas grandes.</p>
+          </div>
+          <div class="bg-white border rounded p-4">
+            <div class="flex items-center mb-2"><i class="fas fa-random text-yellow-500 mr-2"></i><strong class="text-green-700">Híbrida</strong></div>
+            <p class="text-sm">Combinação de duas ou mais topologias. Mais flexível e realista.</p>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-transmissao">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-exchange-alt text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Transmissão de Dados</h2>
+        </div>
+        <p class="text-gray-700 mb-4">A transmissão de dados envolve o envio de informações de um ponto a outro através de um meio físico ou wireless. Conceitos fundamentais incluem tipo de sinal, meio físico, desempenho e confiabilidade.</p>
+
+        <div class="code-block mb-4">
+          <pre><span class="comment"># Comandos úteis para testar transmissão</span>
+<span class="function">ping</span> -c 4 google.com          <span class="comment"># latência e perda de pacotes</span>
+<span class="function">traceroute</span> 8.8.8.8            <span class="comment"># caminho dos pacotes (Linux)</span>
+<span class="function">mtr</span> --report 1.1.1.1          <span class="comment"># teste contínuo de rota</span>
+<span class="function">iperf3</span> -c servidor -t 30      <span class="comment"># medir throughput (banda)</span></pre>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+          <div>
+            <h4 class="font-semibold text-green-700 mb-2">Meios de Transmissão</h4>
+            <ul class="text-sm space-y-2">
+              <li><strong>Par Trançado (UTP/STP)</strong> -> Cat5e/Cat6/Cat7 -> até 10 Gbps</li>
+              <li><strong>Fibra Óptica</strong> -> Monomodo/Multimodo -> até 400 Gbps+ por canal</li>
+              <li><strong>Coaxial</strong> -> Ainda usado em TV a cabo e algumas redes antigas</li>
+              <li><strong>Wireless</strong> -> Rádio, micro-ondas, infravermelho, satélite</li>
+            </ul>
+          </div>
+          <div>
+            <h4 class="font-semibold text-green-700 mb-2">Métricas Importantes</h4>
+            <ul class="text-sm space-y-2">
+              <li><strong>Latência</strong> -> Tempo de ida e volta (RTT) em ms</li>
+              <li><strong>Throughput</strong> -> Taxa efetiva de transferência (Mbps/Gbps)</li>
+              <li><strong>Jitter</strong> -> Variação na latência (crítico para VoIP/vídeo)</li>
+              <li><strong>Perda de Pacotes</strong> -> % de pacotes que não chegam</li>
+              <li><strong>Bandwidth</strong> -> Capacidade máxima do meio</li>
+            </ul>
+          </div>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-lan-pan-man-wan">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-wifi text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Redes LAN, PAN, MAN e WAN</h2>
+        </div>
+        <p class="text-gray-700 mb-4">A classificação por abrangência geográfica é uma das mais utilizadas. Cada tipo tem características específicas de velocidade, custo, propriedade e tecnologia.</p>
+
+        <div class="overflow-x-auto">
+          <table class="min-w-full border text-sm">
+            <thead class="bg-green-100">
+              <tr>
+                <th class="px-4 py-2 text-left">Tipo</th>
+                <th class="px-4 py-2 text-left">Abrangência</th>
+                <th class="px-4 py-2 text-left">Velocidade Típica</th>
+                <th class="px-4 py-2 text-left">Exemplos / Tecnologias</th>
+                <th class="px-4 py-2 text-left">Propriedade</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y">
+              <tr>
+                <td class="px-4 py-2 font-semibold text-green-700">PAN</td>
+                <td class="px-4 py-2">~10 metros</td>
+                <td class="px-4 py-2">1-3 Mbps (Bluetooth)</td>
+                <td class="px-4 py-2">Bluetooth, Zigbee, USB, IrDA</td>
+                <td class="px-4 py-2">Pessoal / Residencial</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold text-green-700">LAN</td>
+                <td class="px-4 py-2">Prédio / Campus</td>
+                <td class="px-4 py-2">1 Gbps - 400 Gbps</td>
+                <td class="px-4 py-2">Ethernet, Wi-Fi 6/7, PoE</td>
+                <td class="px-4 py-2">Empresa / Universidade</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold text-green-700">MAN</td>
+                <td class="px-4 py-2">Cidade / Região</td>
+                <td class="px-4 py-2">10-100 Gbps</td>
+                <td class="px-4 py-2">Metro Ethernet, DWDM, Cable</td>
+                <td class="px-4 py-2">Provedor / Prefeitura</td>
+              </tr>
+              <tr>
+                <td class="px-4 py-2 font-semibold text-green-700">WAN</td>
+                <td class="px-4 py-2">País / Continente / Global</td>
+                <td class="px-4 py-2">Variável (Mbps a Tbps)</td>
+                <td class="px-4 py-2">Internet, MPLS, SD-WAN, Satélite</td>
+                <td class="px-4 py-2">Múltiplos provedores</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="mt-6 bg-green-50 border-l-4 border-green-600 p-4 text-sm">
+          <strong>Dica:</strong> A internet é a maior WAN do mundo. Muitas empresas usam SD-WAN para gerenciar conexões WAN de forma inteligente e econômica.
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-camada-aplicacao">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-globe text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Camada de Aplicação (OSI × TCP/IP)</h2>
+        </div>
+        <p class="text-gray-700 mb-4">A camada de aplicação é onde os programas do usuário interagem com a rede. No modelo <strong>OSI</strong> é a camada 7. No modelo <strong>TCP/IP</strong> a camada de aplicação engloba as camadas de Aplicação, Apresentação e Sessão do OSI.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mb-6">
+          <div class="border p-4 rounded">
+            <h4 class="font-bold text-green-700 mb-2">Principais Protocolos</h4>
+            <ul class="text-sm space-y-1">
+              <li><strong>HTTP/HTTPS</strong> -> Web (portas 80/443)</li>
+              <li><strong>DNS</strong> -> Resolução de nomes (porta 53 UDP/TCP)</li>
+              <li><strong>FTP / SFTP</strong> -> Transferência de arquivos</li>
+              <li><strong>SMTP / IMAP / POP3</strong> -> E-mail</li>
+              <li><strong>SSH</strong> -> Acesso remoto seguro (porta 22)</li>
+              <li><strong>DHCP</strong> -> Atribuição automática de IP</li>
+            </ul>
+          </div>
+          <div class="border p-4 rounded">
+            <h4 class="font-bold text-green-700 mb-2">Diferença OSI × TCP/IP</h4>
+            <p class="text-sm">TCP/IP é o modelo prático usado na internet (4 camadas). OSI é teórico e didático (7 camadas). A camada de aplicação do TCP/IP corresponde às camadas 5, 6 e 7 do OSI.</p>
+          </div>
+        </div>
+
+        <div class="code-block">
+          <pre><span class="comment"># Exemplos de uso da camada de aplicação</span>
+curl -I https://www.google.com          <span class="comment"># Testar HTTP/HTTPS</span>
+nslookup google.com                     <span class="comment"># Consulta DNS</span>
+ssh usuario@servidor.com                <span class="comment"># Conexão SSH</span>
+dig +short example.com                  <span class="comment"># Resolução DNS avançada</span></pre>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-camada-transporte">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-shipping-fast text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Camada de Transporte</h2>
+        </div>
+        <p class="text-gray-700 mb-4">Responsável pela comunicação fim-a-fim entre aplicações. Garante que os dados cheguem corretamente (ou não, dependendo do protocolo). No OSI é a camada 4, e não se alinhou aos padrões requerido pela rede, por isso, foi rejeitado, o que resultou na implementação do TCP/IP. No TCP/IP também é chamada de camada de Transporte, e é o substituto mais eficiente que o modelo OSI.</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4 mt-4">
+          <div class="bg-red-50 border border-red-200 rounded p-4">
+            <h3 class="font-bold text-red-700 mb-2"><i class="fas fa-check-double mr-2"></i>TCP --> Transmission Control Protocol</h3>
+            <ul class="text-sm text-red-600 space-y-1">
+              <li>* Confiável (entrega garantida)</li>
+              <li>* Orientado a conexão (3-way handshake)</li>
+              <li>* Controle de fluxo e congestão</li>
+              <li>* Ordenação e retransmissão</li>
+              <li>Portas: 80 (HTTP), 443 (HTTPS), 22 (SSH)</li>
+              <li>Ideal para: web, e-mail, transferência de arquivos</li>
+            </ul>
+          </div>
+          <div class="bg-blue-50 border border-blue-200 rounded p-4">
+            <h3 class="font-bold text-blue-700 mb-2"><i class="fas fa-rocket mr-2"></i>UDP --> User Datagram Protocol</h3>
+            <ul class="text-sm text-blue-600 space-y-1">
+              <li>* Rápido e leve (sem overhead)</li>
+              <li>* Sem conexão (fire-and-forget)</li>
+              <li>* Sem garantia de entrega</li>
+              <li>* Sem controle de ordem ou fluxo</li>
+              <li>Portas: 53 (DNS), 123 (NTP), 3478 (STUN)</li>
+              <li>Ideal para: streaming, VoIP, jogos online, DNS</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="mt-4 text-sm bg-green-50 p-3 rounded">
+          <strong>3-Way Handshake TCP:</strong> SYN → SYN-ACK → ACK<br>
+          <strong>Comando prático:</strong> <code class="bg-white px-1">ss -tuln</code> (mostra portas TCP/UDP abertas)
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-camada-rede">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-router text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Camada de Rede</h2>
+        </div>
+        <p class="text-gray-700 mb-4">Responsável pelo roteamento de pacotes entre redes diferentes (inter-redes). No OSI é a camada 3; no TCP/IP é a camada de Internet. O protocolo principal é o <strong>IP</strong> (Internet Protocol).</p>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 mt-4">
+          <div class="border p-4 rounded">
+            <h4 class="font-semibold text-green-700">Endereçamento</h4>
+            <p class="text-sm mt-1">IPv4 (32 bits) e IPv6 (128 bits). Subnetting, CIDR, NAT.</p>
+            <code class="text-xs block mt-2">192.168.1.0/24<br>2001:db8::/32</code>
+          </div>
+          <div class="border p-4 rounded">
+            <h4 class="font-semibold text-green-700">Roteamento</h4>
+            <p class="text-sm mt-1">Decide o melhor caminho. Protocolos: OSPF, BGP, EIGRP, RIP.</p>
+            <p class="text-xs mt-1 text-gray-500">Roteadores usam tabelas de roteamento.</p>
+          </div>
+          <div class="border p-4 rounded">
+            <h4 class="font-semibold text-green-700">Outros Protocolos</h4>
+            <ul class="text-sm mt-1">
+              <li>ICMP -> Ping e erros</li>
+              <li>ARP -> MAC ←→ IP</li>
+              <li>IGMP -> Multicast</li>
+            </ul>
+          </div>
+        </div>
+
+        <div class="code-block mt-4">
+          <pre><span class="comment"># Comandos úteis da camada de rede</span>
+ip route show                     <span class="comment"># Tabela de roteamento</span>
+traceroute 8.8.8.8                <span class="comment"># Rota até o destino</span>
+arp -a                            <span class="comment"># Tabela ARP</span>
+ping -c 3 192.168.1.1             <span class="comment"># Testar gateway</span></pre>
+        </div>
+      </div>
+    </template>
+
+    <template id="tpl-recursos">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-book text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Documentação e Ferramentas Recomendadas</h2>
+        </div>
+        <ul class="space-y-3 text-gray-700">
+          <li><a href="https://www.ietf.org/" target="_blank" class="text-green-700 hover:underline">IETF — Padrões da Internet (RFCs)</a></li>
+          <li><a href="https://www.cisco.com/c/en/us/solutions/small-business/resource-center/networking/networking-basics.html" target="_blank" class="text-green-700 hover:underline">Cisco Networking Academy (gratuito)</a></li>
+          <li><a href="https://www.wireshark.org/" target="_blank" class="text-green-700 hover:underline">Wireshark — Analisador de pacotes (essencial)</a></li>
+          <li><a href="https://www.netacad.com/" target="_blank" class="text-green-700 hover:underline">Cisco NetAcad — Cursos oficiais de redes</a></li>
+          <li><a href="https://packettracer.net/" target="_blank" class="text-green-700 hover:underline">Cisco Packet Tracer — Simulador de redes</a></li>
+        </ul>
+      </div>
+    </template>
+
+    <template id="tpl-pratica">
+      <div class="bg-white rounded-lg shadow-md p-6 mb-6">
+        <div class="flex items-center mb-4">
+          <i class="fas fa-terminal text-green-600 text-2xl mr-3"></i>
+          <h2 class="text-2xl font-bold text-gray-800">Prática: Comandos Essenciais de Rede</h2>
+        </div>
+        <div class="code-block">
+          <pre><span class="comment"># Windows</span>
+ipconfig /all
+ping google.com
+tracert google.com
+nslookup google.com
+netstat -ano | findstr :80
+
+<span class="comment"># Linux / macOS</span>
+ip addr show
+ping -c 4 google.com
+traceroute google.com
+dig google.com
+ss -tuln
+mtr google.com</pre>
+        </div>
+        <p class="mt-4 text-sm text-gray-600">Experimente esses comandos no seu terminal para diagnosticar problemas de conectividade, latência e configuração de rede.</p>
+      </div>
+    </template>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const templates = {};
+        document.querySelectorAll("template").forEach((t) => {
+          templates[t.id.replace("tpl-", "")] = t.innerHTML;
+        });
+
+        const contentDiv = document.getElementById("explanation");
+        const navLinks = document.querySelectorAll(".nav-link");
+        const dropdownBtns = document.querySelectorAll(".dropdown-btn");
+        const searchInput = document.querySelector('input[type="text"]');
+        const searchResults = document.getElementById("search-results");
+
+        const mobileMenuBtn = document.getElementById("mobile-menu-btn");
+        const closeSidebarBtn = document.getElementById("close-sidebar-btn");
+        const sidebar = document.getElementById("sidebar");
+        const sidebarOverlay = document.getElementById("sidebar-overlay");
+
+        function openSidebar() {
+          sidebar.classList.remove("-translate-x-full");
+          sidebarOverlay.classList.remove("hidden");
+          document.body.classList.add("overflow-hidden");
+        }
+
+        function closeSidebar() {
+          sidebar.classList.add("-translate-x-full");
+          sidebarOverlay.classList.add("hidden");
+          document.body.classList.remove("overflow-hidden");
+        }
+
+        if (mobileMenuBtn) mobileMenuBtn.addEventListener("click", openSidebar);
+        if (closeSidebarBtn) closeSidebarBtn.addEventListener("click", closeSidebar);
+        if (sidebarOverlay) sidebarOverlay.addEventListener("click", closeSidebar);
+
+        function loadSection(sectionId) {
+          if (templates[sectionId]) {
+            contentDiv.innerHTML = templates[sectionId];
+            navLinks.forEach((link) => link.classList.remove("nav-active"));
+            const activeLink = document.querySelector(`.nav-link[data-section="${sectionId}"]`);
+            if (activeLink) activeLink.classList.add("nav-active");
+            localStorage.setItem("activeSectionId", sectionId);
+          } else {
+            contentDiv.innerHTML = `<div class="bg-white rounded-lg shadow-md p-6"><p class="text-gray-600">Seção "${sectionId}" em desenvolvimento. Explore o sumário ao lado.</p></div>`;
+          }
+        }
+
+        navLinks.forEach((link) => {
+          link.addEventListener("click", (e) => {
+            e.preventDefault();
+            loadSection(link.dataset.section);
+            if (window.innerWidth < 768) {
+              closeSidebar();
+            }
+          });
+        });
+
+        dropdownBtns.forEach((btn) => {
+          btn.addEventListener("click", (e) => {
+            e.preventDefault();
+            const content = btn.nextElementSibling;
+            const icon = btn.querySelector(".fa-chevron-right");
+            content.classList.toggle("open");
+            if (content.classList.contains("open")) {
+              icon.style.transform = "rotate(90deg)";
+            } else {
+              icon.style.transform = "rotate(0deg)";
+            }
+          });
+        });
+
+        searchInput.addEventListener("input", (e) => {
+          const query = e.target.value.toLowerCase().trim();
+          searchResults.innerHTML = "";
+          
+          if (query.length > 1) {
+            let found = false;
+            navLinks.forEach((link) => {
+              const text = link.textContent.toLowerCase();
+              const explanation = link.dataset.explanation ? link.dataset.explanation.toLowerCase() : "";
+              if (text.includes(query) || explanation.includes(query)) {
+                found = true;
+                const div = document.createElement("div");
+                div.className = "p-2 hover:bg-green-100 cursor-pointer text-gray-800 flex items-center";
+                div.innerHTML = `<i class="fas fa-search mr-2 text-green-600"></i> ${link.textContent.trim()}`;
+                div.addEventListener("click", () => {
+                  loadSection(link.dataset.section);
+                  searchResults.classList.add("hidden");
+                  searchInput.value = "";
+                  if (window.innerWidth < 768) {
+                    closeSidebar();
+                  }
+                });
+                searchResults.appendChild(div);
+              }
+            });
+            if (found) {
+              searchResults.classList.remove("hidden");
+            } else {
+              searchResults.classList.add("hidden");
+            }
+          } else {
+            searchResults.classList.add("hidden");
+          }
+        });
+
+        document.addEventListener("click", (e) => {
+          if (!searchInput.contains(e.target) && !searchResults.contains(e.target)) {
+            searchResults.classList.add("hidden");
+          }
+        });
+
+        const lastSection = localStorage.getItem("activeSectionId");
+        const sectionToLoad = lastSection && templates[lastSection] ? lastSection : "definicao";
+
+        const parentDropdownMap = {
+          "tipos-redes": "dd-conceitos",
+          "topologia": "dd-conceitos",
+          "transmissao": "dd-conceitos",
+          "lan-pan-man-wan": "dd-escala",
+          "camada-aplicacao": "dd-modelos",
+          "camada-transporte": "dd-modelos",
+          "camada-rede": "dd-modelos"
+        };
+
+        const parentId = parentDropdownMap[sectionToLoad];
+        if (parentId) {
+          const dd = document.getElementById(parentId);
+          if (dd) {
+            dd.classList.add("open");
+            const btn = dd.previousElementSibling;
+            if (btn) {
+              const icon = btn.querySelector(".fa-chevron-right");
+              if (icon) icon.style.transform = "rotate(90deg)";
+            }
+          }
+        }
+        loadSection(sectionToLoad);
+      });
+    </script>
+  </body>
+</html>
